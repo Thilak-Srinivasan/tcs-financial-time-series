@@ -45,6 +45,7 @@ The central finding — that TCS stock follows a **non-stationary random walk** 
 - [Conclusions & Investor Recommendations](#conclusions--investor-recommendations)
 - [How to Run](#how-to-run)
 - [Dependencies](#dependencies)
+- [References](#references)
 
 ---
 
@@ -69,21 +70,22 @@ Tata Consultancy Services (TCS) is one of India's largest and most liquid IT sec
 tcs-financial-time-series/
 │
 ├── data/
-│   └── TCS_NSE_2015_2025.csv          # Raw historical closing price data
+│   └── TCS_NSE_2015_2025.csv                  # Raw historical closing price data
 │
 ├── notebooks/
-│   └── TCS_Analysis.ipynb             # Full analysis notebook (Google Colab)
+│   └── TCS_Analysis.ipynb                     # Full analysis notebook (Google Colab)
 │
 ├── outputs/
 │   ├── figures/
-│   │   ├── closing_price_2015_2025.png
-│   │   ├── distribution_histogram.png
-│   │   ├── moving_averages_50_200.png
-│   │   ├── stl_decomposition.png
-│   │   ├── rolling_mean_std.png
-│   │   ├── acf_pacf_differenced.png
-│   │   ├── arima_forecast.png
-│   │   └── sarima_forecast.png
+│   │   ├── 01_intraday_volatility_profile.png
+│   │   ├── 02_tcs_closing_price_2015_2025.png
+│   │   ├── 03_distribution_closing_prices.png
+│   │   ├── 04_moving_averages_50_200_day.png
+│   │   ├── 05_stl_decomposition.png
+│   │   ├── 06_rolling_mean_std_stationarity.png
+│   │   ├── 07_acf_pacf_differenced_series.png
+│   │   ├── 08_arima_forecast_zoomed.png
+│   │   └── 09_sarima_forecast_zoomed.png
 │   └── model_results/
 │       ├── adf_test_results.csv
 │       └── model_comparison_aic_bic.csv
@@ -122,7 +124,19 @@ Rt = ln(Pt / Pt-1)
 
 Log-returns are additive across time, approximately stationary, and provide a valid domain for distribution fitting and ARIMA modeling.
 
-### 3. Distribution Fitting (MLE + AIC)
+The intraday volatility profile below illustrates how price variance concentrates near market open and close — reinforcing the importance of return-based modelling over raw price levels.
+
+![Intraday Volatility Profile](outputs/figures/01_intraday_volatility_profile.png)
+*Figure 1: Intraday volatility profile of TCS — elevated variance at open (09:15–10:15 IST) and close (14:30–15:30 IST)*
+
+### 3. Price Evolution & Stock Split Impact
+
+The full 10-year closing price history shows TCS appreciating from ~₹1,750 to a peak above ₹4,500. The sharp discontinuity in mid-2018 reflects the **2:1 stock split** (May 2018) — a deterministic structural break, not a market crash.
+
+![TCS Closing Price 2015–2025](outputs/figures/02_tcs_closing_price_2015_2025.png)
+*Figure 2: TCS closing price (2015–2025). The steep drop in 2018 corresponds to the 2:1 stock split, not a market event. COVID-19 trough visible in early 2020.*
+
+### 4. Distribution Fitting (MLE + AIC)
 
 **Closing prices** — candidates tested via Maximum Likelihood Estimation:
 - Normal → rejected (no lower bound; poor tail fit)
@@ -130,12 +144,34 @@ Log-returns are additive across time, approximately stationary, and provide a va
 - Lognormal → reasonable but inadequate curvature fit
 - **Weibull → best fit** by AIC/BIC (k̂ > 1, stretched right-skew)
 
+The bimodal character of the empirical price histogram (peaks near ₹2,500 and ₹3,300) reflects the pre- and post-COVID price regimes rather than a true mixture distribution.
+
+![Distribution of TCS Closing Prices](outputs/figures/03_distribution_closing_prices.png)
+*Figure 3: Empirical distribution of TCS closing prices with Weibull KDE overlay. Bimodality reflects distinct price regimes across the decade rather than a mixture distribution.*
+
 **Log-returns** — empirical return density exhibits:
 - High central peak
 - Symmetric heavy tails (leptokurtosis)
 - **Student-t (ν̂ = 3.606) → best fit** — significantly heavier than Gaussian (ν → ∞), confirming elevated tail-risk
 
-### 4. Stationarity Testing — ADF
+### 5. Trend Analysis — Moving Averages
+
+The 50-day and 200-day Simple Moving Averages (SMAs) confirm the long-term upward trend. Classic **Golden Cross** (50-day crossing above 200-day) and **Death Cross** signals are visible around 2020–2021, coinciding with the COVID recovery rally.
+
+![50-Day and 200-Day Moving Averages](outputs/figures/04_moving_averages_50_200_day.png)
+*Figure 4: TCS close price with 50-day (orange) and 200-day (red) SMAs. The 2018 split discontinuity is visible; post-2020 recovery shows a sustained Golden Cross.*
+
+### 6. Trend & Seasonality Decomposition
+
+- **Multiplicative STL decomposition** applied (additive rejected — seasonal variance scales with trend level)
+- Trend component: clear upward trajectory from ~₹2,000 → ₹4,000+
+- Seasonal component: repetitive envelope oscillating around 1.00, consistent with quarterly earnings cycles and institutional rebalancing
+- Residuals: heteroscedastic, with the 2018 split clearly visible as a concentrated outlier cluster
+
+![STL Decomposition](outputs/figures/05_stl_decomposition.png)
+*Figure 5: Multiplicative STL decomposition of TCS closing prices into trend, seasonal, and residual components. The residual spike at index ~750 corresponds to the 2018 stock split.*
+
+### 7. Stationarity Testing — ADF
 
 The Augmented Dickey-Fuller (ADF) test was applied at two levels:
 
@@ -144,26 +180,28 @@ The Augmented Dickey-Fuller (ADF) test was applied at two levels:
 | Close Price (Level) | -1.847 | 0.357 | -3.433 | -2.863 | **Non-Stationary** |
 | Close Price (1st Diff) | -49.356 | < 0.001 | -3.433 | -2.863 | **Stationary I(1)** |
 
-The series is **Integrated of Order 1** — one round of differencing is required before any linear model can be applied.
+The series is **Integrated of Order 1** — one round of differencing is required before any linear model can be applied. The rolling mean and standard deviation plot below confirms the time-varying mean (µt) and heteroscedasticity visually.
 
-### 5. Trend & Seasonality Decomposition
+![Rolling Mean and Std — Stationarity Check](outputs/figures/06_rolling_mean_std_stationarity.png)
+*Figure 6: Rolling mean (cyan) tracks the price trend closely, confirming a time-dependent mean µt. Rolling std (purple) spikes at the 2018 split — evidence of heteroscedasticity throughout the series.*
 
-- **Multiplicative STL decomposition** applied (additive rejected — seasonal variance scales with trend level)
-- Trend component: clear upward trajectory from ~₹1200 → ₹4000+
-- Seasonal component: repetitive ≈1.00 envelope, consistent with quarterly earnings cycles and institutional rebalancing
-- Residuals: heteroscedastic, increasing variance post-2020
-
-### 6. ACF / PACF Analysis
+### 8. ACF / PACF Analysis
 
 Both ACF and PACF of the differenced series showed **no statistically significant autocorrelation** at any positive lag — all values within 95% confidence bands. No cut-off or tail-off pattern characteristic of AR or MA structure. The series behaves as **white noise** post-differencing.
 
-### 7. Time Series Forecasting Models
+![ACF and PACF of Differenced Series](outputs/figures/07_acf_pacf_differenced_series.png)
+*Figure 7: ACF (left) and PACF (right) of the first-differenced TCS series. All lags beyond zero fall within the 95% confidence interval (shaded band) — consistent with a white noise process and ARIMA(0,1,0).*
+
+### 9. Time Series Forecasting Models
 
 #### AR(2) and MA(2)
 Both models produced statistically insignificant lag coefficients (p > 0.05), confirming no linear predictability in TCS returns.
 
 #### ARIMA(0, 1, 0) — Random Walk
 Optimal specification by AIC/BIC. Forecast trajectory is flat — conditional expectation Ŷ(t+1) = Y(t). Visually and statistically confirms **Weak-Form Efficient Market Hypothesis** for TCS.
+
+![ARIMA Forecast — Zoomed on Tail](outputs/figures/08_arima_forecast_zoomed.png)
+*Figure 8: ARIMA(0,1,0) 30-day forecast (dashed blue) on the last 100 observed trading days. The flat trajectory at ~₹3,600 is the hallmark of a random walk — the best linear forecast is simply the last observed price.*
 
 #### ARMA(2, 2) — Over-parameterized
 Near-cancellation of AR and MA coefficients (ϕ₁ ≈ −θ₁ = −0.55, 0.53) indicates parameter redundancy. Higher AIC (27,008) than simple random walk.
@@ -173,6 +211,9 @@ Seasonal period s = 30 trading days. Achieved lower AIC (26,819.8) but:
 - All coefficients statistically insignificant (p > 0.05)
 - Seasonal MA coefficient Θ₃₀ ≈ −1.0 → **invertibility boundary failure**
 - Concluded as spurious seasonal fit — random walk remains the superior model
+
+![SARIMA Forecast — Zoomed on Tail](outputs/figures/09_sarima_forecast_zoomed.png)
+*Figure 9: SARIMA(1,1,1)×(1,1,1)₃₀ 30-day forecast (blue dotted) on the last 150 observed trading days. Despite a marginally lower AIC, the near-flat trajectory and invertibility failure of Θ₃₀ ≈ −1.0 confirm this as a spurious fit.*
 
 #### LSTM (Advanced — conceptual inclusion)
 LSTM's capacity to model long-range sequential dependencies and non-linear volatility clustering makes it theoretically superior to linear ARIMA/SARIMA for volatile financial series. Discussed as a benchmark framing for the linear model limitations.
@@ -270,20 +311,43 @@ pip install -r requirements.txt
 
 ---
 
-## Repository Contents
+## References
 
-| File / Folder | Description |
-|---|---|
-| `notebooks/TCS_Analysis.ipynb` | Full analysis — preprocessing, EDA, distribution fitting, ADF, ARIMA/SARIMA |
-| `data/TCS_NSE_2015_2025.csv` | Raw closing price data from NSE |
-| `outputs/figures/` | All plots generated in the report |
-| `requirements.txt` | Python package dependencies |
+1. **Pasari, S.** (2025). *MATH F432: Applied Statistical Methods — Course Notes and Assignment Guidelines*. Department of Mathematics, BITS Pilani, Pilani Campus.
 
----
+2. **Fisher Group (Grp 3).** (2025). *Data Analysis for Investments: Financial Time Series & Portfolio Forecasting (TCS)*. Assignment Report, MATH F432, BITS Pilani. Available at: [Report PDF](https://drive.google.com/file/d/1ml-DV5bJA8EZulhCa91VB0FBTXETR5tu/view?usp=share_link)
 
-## License
+3. **Poisson Group.** (2023). *Stock Market Data Analysis for Investments: Analysis of ICICI Bank*. Reference Report, MATH F432. Internal Document, BITS Pilani.
 
-This project is released under the [MIT License](LICENSE) for academic and educational use.
+4. **Hyndman, R. J., & Athanasopoulos, G.** (2018). *Forecasting: Principles and Practice* (2nd ed.). OTexts. https://otexts.com/fpp2/
+
+5. **Quigley, M.** (2009). *Extreme Value Theory for Stock Returns*. Diplomarbeit, University of Muenster. https://www.uni-muenster.de/Stochastik/paulsen/Abschlussarbeiten/Diplomarbeiten/Quigley.pdf
+
+6. **Nau, R.** (2020). *ARIMA(0,1,0) model with constant (random walk with drift)*. Duke University. https://people.duke.edu/~rnau/411arim.htm
+
+7. **Investopedia.** *Autoregressive Integrated Moving Average (ARIMA)*. https://www.investopedia.com/terms/a/autoregressive-integrated-moving-average-arima.asp
+
+8. **Wikipedia.** *Autoregressive Integrated Moving Average*. https://en.wikipedia.org/wiki/Autoregressive_integrated_moving_average
+
+9. **GeeksforGeeks.** *SARIMA — Seasonal Autoregressive Integrated Moving Average*. https://www.geeksforgeeks.org/machine-learning/sarima-seasonal-autoregressive-integrated-moving-average/
+
+10. **Phosgene89.** *ARIMA and SARIMAX Models*. https://phosgene89.github.io/sarima.html
+
+11. **Williams, J.** (2023). *Stock Forecasting with the SARIMA Model*. Medium. https://medium.com/@juliawilliams_79854/stock-forecasting-with-the-sarima-model-edad16d37445
+
+12. **Fiveable.** *Ljung-Box Test and White Noise Processes*. https://fiveable.me/intro-time-series/unit-4/ljung-box-test-white-noise-processes/study-guide/OIbpshoxfpjQSmGM
+
+13. **NIST/SEMATECH.** *e-Handbook of Statistical Methods — Box-Ljung Test for Autocorrelation*. https://www.itl.nist.gov/div898/handbook/pmc/section4/pmc4481.htm
+
+14. **Fiveable.** *Evaluating Forecast Accuracy: MAE, RMSE, MAPE*. https://fiveable.me/intro-time-series/unit-8/evaluating-forecast-accuracy-mae-rmse-mape/study-guide/ijqkb0CAqRaHLBFi
+
+15. **Unofficed.** *Understanding the Results of Augmented Dickey-Fuller (ADF) Test on Stock Market*. https://unofficed.com/courses/risk-management/lessons/understanding-the-results-of-augmented-dickey-fuller-adf-test-on-stock-market/
+
+16. **Zilliz AI.** *How do you choose parameters for an ARIMA model?* https://zilliz.com/ai-faq/how-do-you-choose-parameters-for-an-arima-model
+
+17. **Hyndman, R. J., & Athanasopoulos, G.** (2018). *Stationarity and Differencing*. Forecasting: Principles and Practice. https://otexts.com/fpp2/stationarity.html
+
+18. **Meghan.** *Stock Price Prediction using ARIMA and SARIMA*. GitHub Repository. https://github.com/M3GHAN/stock-price-prediction-ARIMA-SARIMA
 
 ---
 
@@ -294,5 +358,5 @@ This project is released under the [MIT License](LICENSE) for academic and educa
 
 **Course:** MATH F432 - Applied Statistical Methods \
 **Supervisor:** Prof. Sumanta Pasari | Associate Professor | Department of Mathematics, BITS Pilani \
-**Period:** October-December 2025 \
+**Period:** October–December 2025 \
 **Contact:** f20220771@pilani.bits-pilani.ac.in
