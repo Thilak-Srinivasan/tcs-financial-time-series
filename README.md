@@ -88,6 +88,7 @@ tcs-financial-time-series/
 │       ├── adf_test_results.csv
 │       └── model_comparison_aic_bic.csv
 │
+├── requirements.txt
 └── README.md
 ```
 
@@ -276,7 +277,6 @@ pip install -r requirements.txt
 | `notebooks/TCS_Analysis.ipynb` | Full analysis — preprocessing, EDA, distribution fitting, ADF, ARIMA/SARIMA |
 | `data/TCS_NSE_2015_2025.csv` | Raw closing price data from NSE |
 | `outputs/figures/` | All plots generated in the report |
-| `report/ASM_G3_A2.pdf` | Complete written assignment report |
 | `requirements.txt` | Python package dependencies |
 
 ---
