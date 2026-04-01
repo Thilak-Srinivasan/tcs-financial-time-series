@@ -292,7 +292,7 @@ This project is released under the [MIT License](LICENSE) for academic and educa
 
 ---
 
-**Course:** MATH F432 - Applied Statistical Methods
+**Course:** MATH F432 - Applied Statistical Methods \
 **Supervisor:** Prof. Sumanta Pasari | Associate Professor | Department of Mathematics, BITS Pilani \
 **Period:** October-December 2025 \
 **Contact:** f20220771@pilani.bits-pilani.ac.in
