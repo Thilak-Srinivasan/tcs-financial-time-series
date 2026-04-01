@@ -1,7 +1,8 @@
 # 📈 Financial Time Series & Portfolio Forecasting — TCS (2015–2025)
 
-> **MATH F432** | BITS Pilani, Pilani Campus | November 2025 \
-> Instructor: Prof. Sumanta Pasari, Department of Mathematics, BITS Pilani
+> **Applied Statistical Methods | MATH F432** | November 2025 \
+> Thilak S · Under Prof. Sumanta Pasari \
+> Department of Mathematics, BITS Pilani 
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white)](https://www.python.org/)
 [![statsmodels](https://img.shields.io/badge/statsmodels-0.14-orange)](https://www.statsmodels.org/)
