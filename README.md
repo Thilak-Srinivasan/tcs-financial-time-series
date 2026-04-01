@@ -289,3 +289,10 @@ This project is released under the [MIT License](LICENSE) for academic and educa
 
 > *"The closing values of TCS are modeled best using a Weibull distribution, while the log-return data are described by a heavy-tailed Student-t distribution. This result supports recent developments in financial theory that emphasize return-based modeling in contrast to raw level price modeling."*  
 > — ASM G3 Report, November 2025
+
+---
+
+**Course:** MATH F432 - Applied Statistical Methods
+**Supervisor:** Prof. Sumanta Pasari | Associate Professor | Department of Mathematics, BITS Pilani \
+**Period:** October-December 2025 \
+**Contact:** f20220771@pilani.bits-pilani.ac.in
