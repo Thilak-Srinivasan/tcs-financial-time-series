@@ -1,6 +1,7 @@
 # 📈 Financial Time Series & Portfolio Forecasting — TCS (2015–2025)
 
 > **MATH F432** | BITS Pilani, Pilani Campus | November 2025
+> Instructor: Prof. Sumanta Pasari, Department of Mathematics, BITS Pilani
 
 [![Python](https://img.shields.io/badge/Python-3.10%2B-blue?logo=python&logoColor=white)](https://www.python.org/)
 [![statsmodels](https://img.shields.io/badge/statsmodels-0.14-orange)](https://www.statsmodels.org/)
@@ -43,8 +44,6 @@ The central finding — that TCS stock follows a **non-stationary random walk** 
 - [Conclusions & Investor Recommendations](#conclusions--investor-recommendations)
 - [How to Run](#how-to-run)
 - [Dependencies](#dependencies)
-- [Team](#team)
-- [Instructor](#instructor)
 
 ---
 
@@ -88,10 +87,6 @@ tcs-financial-time-series/
 │       ├── adf_test_results.csv
 │       └── model_comparison_aic_bic.csv
 │
-├── report/
-│   └── ASM_G3_A2.pdf                  # Full written report
-│
-├── requirements.txt
 └── README.md
 ```
 
@@ -282,14 +277,6 @@ pip install -r requirements.txt
 | `outputs/figures/` | All plots generated in the report |
 | `report/ASM_G3_A2.pdf` | Complete written assignment report |
 | `requirements.txt` | Python package dependencies |
-
----
-
-## Instructor
-
-**Prof. Sumanta Pasari**  
-Department of Mathematics  
-Birla Institute of Technology and Science, Pilani Campus
 
 ---
 
