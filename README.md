@@ -1,4 +1,4 @@
-# 📈 Financial Time Series & Portfolio Forecasting — TCS (2015–2025)
+# Financial Time Series & Portfolio Forecasting : TCS (2015–2025)
 
 > **Applied Statistical Methods | MATH F432** | November 2025 \
 > Thilak S · Under Prof. Sumanta Pasari \
