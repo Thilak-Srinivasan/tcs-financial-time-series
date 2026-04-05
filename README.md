@@ -155,12 +155,12 @@ Rt = ln(Pt / Pt-1)
 
 Log-returns are additive across time, approximately stationary, and provide a valid domain for distribution fitting and ARIMA modeling.
 
-![Intraday Volatility Profile](outputs/figures/01_intraday_volatility_profile.png)
+![Intraday Volatility Profile](outputs/01_intraday_volatility_profile.png)
 *Figure 1: Intraday volatility profile — elevated variance at market open (09:15–10:15 IST) and close (14:30–15:30 IST)*
 
 ### 3. Price Evolution & Stock Split Impact
 
-![TCS Closing Price 2015–2025](outputs/figures/02_tcs_closing_price_2015_2025.png)
+![TCS Closing Price 2015–2025](outputs/02_tcs_closing_price_2015_2025.png)
 *Figure 2: TCS closing price (2015–2025). The steep drop in 2018 is the 2:1 stock split, not a market event. COVID-19 trough visible in early 2020.*
 
 ### 4. Distribution Fitting (MLE + AIC)
@@ -171,14 +171,14 @@ Log-returns are additive across time, approximately stationary, and provide a va
 - Lognormal → reasonable but inadequate curvature fit
 - **Weibull → best fit** by AIC/BIC (k̂ > 1, stretched right-skew)
 
-![Distribution of TCS Closing Prices](outputs/figures/03_distribution_closing_prices.png)
+![Distribution of TCS Closing Prices](outputs/03_distribution_closing_prices.png)
 *Figure 3: Empirical distribution of TCS closing prices with Weibull KDE overlay. Bimodality reflects pre- and post-COVID price regimes.*
 
 **Log-returns** — **Student-t (ν̂ = 3.606) → best fit** — significantly heavier tails than Gaussian, confirming elevated tail-risk.
 
 ### 5. Trend Analysis — Moving Averages
 
-![50-Day and 200-Day Moving Averages](outputs/figures/04_moving_averages_50_200_day.png)
+![50-Day and 200-Day Moving Averages](outputs/04_moving_averages_50_200_day.png)
 *Figure 4: TCS close price with 50-day (orange) and 200-day (red) SMAs. Post-2020 recovery shows a sustained Golden Cross.*
 
 ### 6. Trend & Seasonality Decomposition
@@ -188,7 +188,7 @@ Log-returns are additive across time, approximately stationary, and provide a va
 - Seasonal: repetitive ≈1.00 envelope consistent with quarterly earnings cycles
 - Residuals: heteroscedastic, increasing variance post-2020
 
-![STL Decomposition](outputs/figures/05_stl_decomposition.png)
+![STL Decomposition](outputs/05_stl_decomposition.png)
 *Figure 5: Multiplicative STL decomposition. Residual spike at ~index 750 corresponds to the 2018 stock split.*
 
 ### 7. Stationarity Testing — ADF
@@ -198,14 +198,14 @@ Log-returns are additive across time, approximately stationary, and provide a va
 | Close Price (Level) | -1.847 | 0.357 | -3.433 | -2.863 | **Non-Stationary** |
 | Close Price (1st Diff) | -49.356 | < 0.001 | -3.433 | -2.863 | **Stationary I(1)** |
 
-![Rolling Mean and Std — Stationarity Check](outputs/figures/06_rolling_mean_std_stationarity.png)
+![Rolling Mean and Std — Stationarity Check](outputs/06_rolling_mean_std_stationarity.png)
 *Figure 6: Rolling mean (cyan) tracks the price trend, confirming time-dependent mean µt. Rolling std (purple) spikes at the 2018 split.*
 
 ### 8. ACF / PACF Analysis
 
 Both ACF and PACF of the differenced series showed **no statistically significant autocorrelation** at any positive lag — the series behaves as **white noise** post-differencing.
 
-![ACF and PACF of Differenced Series](outputs/figures/07_acf_pacf_differenced_series.png)
+![ACF and PACF of Differenced Series](outputs/07_acf_pacf_differenced_series.png)
 *Figure 7: All lags beyond zero fall within the 95% confidence interval — consistent with ARIMA(0,1,0).*
 
 ### 9. Time Series Forecasting Models
@@ -213,13 +213,13 @@ Both ACF and PACF of the differenced series showed **no statistically significan
 #### ARIMA(0, 1, 0) — Random Walk
 Optimal specification by AIC/BIC. Flat forecast confirms **Weak-Form Efficient Market Hypothesis**.
 
-![ARIMA Forecast — Zoomed on Tail](outputs/figures/08_arima_forecast_zoomed.png)
+![ARIMA Forecast — Zoomed on Tail](outputs/08_arima_forecast_zoomed.png)
 *Figure 8: ARIMA(0,1,0) 30-day forecast. Flat trajectory at ~₹3,600 — the best linear forecast is the last observed price.*
 
 #### SARIMA(1,1,1)×(1,1,1)₃₀
 Lower AIC (26,819.8) but Θ₃₀ ≈ −1.0 → invertibility failure. Spurious seasonal fit.
 
-![SARIMA Forecast — Zoomed on Tail](outputs/figures/09_sarima_forecast_zoomed.png)
+![SARIMA Forecast — Zoomed on Tail](outputs/09_sarima_forecast_zoomed.png)
 *Figure 9: SARIMA 30-day forecast. Near-flat trajectory and invertibility failure confirm spurious fit.*
 
 ---
