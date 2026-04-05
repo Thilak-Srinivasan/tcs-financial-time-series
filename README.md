@@ -106,6 +106,7 @@ tcs-financial-time-series/
 │
 ├── data/
 │   └── TCS_NSE_2015_2025.zip          # TCS historical closing prices (download separately — see above)
+│ 
 ├── notebooks/
 │   └── TCS_Analysis.ipynb                     # Full analysis notebook (Google Colab)
 │
@@ -309,41 +310,21 @@ pip install -r requirements.txt
 
 ## References
 
-1. **Pasari, S.** (2025). *MATH F432: Applied Statistical Methods — Course Notes and Assignment Guidelines*. Department of Mathematics, BITS Pilani.
-
-2. **Fisher Group (Grp 3).** (2025). *Data Analysis for Investments: Financial Time Series & Portfolio Forecasting (TCS)*. Assignment Report, MATH F432, BITS Pilani. [Report PDF](https://drive.google.com/file/d/1ml-DV5bJA8EZulhCa91VB0FBTXETR5tu/view?usp=share_link)
-
-3. **Hyndman, R. J., & Athanasopoulos, G.** (2018). *Forecasting: Principles and Practice* (2nd ed.). OTexts. https://otexts.com/fpp2/
-
-4. **Nau, R.** (2020). *ARIMA(0,1,0) model with constant (random walk with drift)*. Duke University. https://people.duke.edu/~rnau/411arim.htm
-
-5. **Investopedia.** *Autoregressive Integrated Moving Average (ARIMA)*. https://www.investopedia.com/terms/a/autoregressive-integrated-moving-average-arima.asp
-
-6. **Wikipedia.** *Autoregressive Integrated Moving Average*. https://en.wikipedia.org/wiki/Autoregressive_integrated_moving_average
-
-7. **GeeksforGeeks.** *SARIMA — Seasonal Autoregressive Integrated Moving Average*. https://www.geeksforgeeks.org/machine-learning/sarima-seasonal-autoregressive-integrated-moving-average/
-
-8. **Phosgene89.** *ARIMA and SARIMAX Models*. https://phosgene89.github.io/sarima.html
-
-9. **Williams, J.** (2023). *Stock Forecasting with the SARIMA Model*. Medium. https://medium.com/@juliawilliams_79854/stock-forecasting-with-the-sarima-model-edad16d37445
-
-10. **Fiveable.** *Ljung-Box Test and White Noise Processes*. https://fiveable.me/intro-time-series/unit-4/ljung-box-test-white-noise-processes/study-guide/OIbpshoxfpjQSmGM
-
-11. **NIST/SEMATECH.** *e-Handbook of Statistical Methods — Box-Ljung Test*. https://www.itl.nist.gov/div898/handbook/pmc/section4/pmc4481.htm
-
-12. **Fiveable.** *Evaluating Forecast Accuracy: MAE, RMSE, MAPE*. https://fiveable.me/intro-time-series/unit-8/evaluating-forecast-accuracy-mae-rmse-mape/study-guide/ijqkb0CAqRaHLBFi
-
-13. **Unofficed.** *Understanding the Results of ADF Test on Stock Market*. https://unofficed.com/courses/risk-management/lessons/understanding-the-results-of-augmented-dickey-fuller-adf-test-on-stock-market/
-
-14. **Hyndman, R. J., & Athanasopoulos, G.** (2018). *Stationarity and Differencing*. https://otexts.com/fpp2/stationarity.html
-
-15. **Meghan.** *Stock Price Prediction using ARIMA and SARIMA*. GitHub. https://github.com/M3GHAN/stock-price-prediction-ARIMA-SARIMA
-
-16. **Quigley, M.** (2009). *Extreme Value Theory for Stock Returns*. University of Muenster. https://www.uni-muenster.de/Stochastik/paulsen/Abschlussarbeiten/Diplomarbeiten/Quigley.pdf
-
-17. **Poisson Group.** (2023). *Stock Market Data Analysis for Investments: Analysis of ICICI Bank*. Reference Report, MATH F432. Internal Document, BITS Pilani.
-
-18. **Zilliz AI.** *How do you choose parameters for an ARIMA model?* https://zilliz.com/ai-faq/how-do-you-choose-parameters-for-an-arima-model
+1. **Hyndman, R. J., & Athanasopoulos, G.** (2018). *Forecasting: Principles and Practice* (2nd ed.). OTexts. https://otexts.com/fpp2/
+2. **Nau, R.** (2020). *ARIMA(0,1,0) model with constant (random walk with drift)*. Duke University. https://people.duke.edu/~rnau/411arim.htm
+3. **Investopedia.** *Autoregressive Integrated Moving Average (ARIMA)*. https://www.investopedia.com/terms/a/autoregressive-integrated-moving-average-arima.asp
+4. **Wikipedia.** *Autoregressive Integrated Moving Average*. https://en.wikipedia.org/wiki/Autoregressive_integrated_moving_average
+5. **GeeksforGeeks.** *SARIMA — Seasonal Autoregressive Integrated Moving Average*. https://www.geeksforgeeks.org/machine-learning/sarima-seasonal-autoregressive-integrated-moving-average/
+6. **Phosgene89.** *ARIMA and SARIMAX Models*. https://phosgene89.github.io/sarima.html
+7. **Williams, J.** (2023). *Stock Forecasting with the SARIMA Model*. Medium. https://medium.com/@juliawilliams_79854/stock-forecasting-with-the-sarima-model-edad16d37445
+8. **Fiveable.** *Ljung-Box Test and White Noise Processes*. https://fiveable.me/intro-time-series/unit-4/ljung-box-test-white-noise-processes/study-guide/OIbpshoxfpjQSmGM
+9. **NIST/SEMATECH.** *e-Handbook of Statistical Methods — Box-Ljung Test*. https://www.itl.nist.gov/div898/handbook/pmc/section4/pmc4481.htm
+10. **Fiveable.** *Evaluating Forecast Accuracy: MAE, RMSE, MAPE*. https://fiveable.me/intro-time-series/unit-8/evaluating-forecast-accuracy-mae-rmse-mape/study-guide/ijqkb0CAqRaHLBFi
+11. **Unofficed.** *Understanding the Results of ADF Test on Stock Market*. https://unofficed.com/courses/risk-management/lessons/understanding-the-results-of-augmented-dickey-fuller-adf-test-on-stock-market/
+12. **Hyndman, R. J., & Athanasopoulos, G.** (2018). *Stationarity and Differencing*. https://otexts.com/fpp2/stationarity.html
+13. **Meghan.** *Stock Price Prediction using ARIMA and SARIMA*. GitHub. https://github.com/M3GHAN/stock-price-prediction-ARIMA-SARIMA
+14. **Quigley, M.** (2009). *Extreme Value Theory for Stock Returns*. University of Muenster. https://www.uni-muenster.de/Stochastik/paulsen/Abschlussarbeiten/Diplomarbeiten/Quigley.pdf
+15. **Zilliz AI.** *How do you choose parameters for an ARIMA model?* https://zilliz.com/ai-faq/how-do-you-choose-parameters-for-an-arima-model
 
 ---
 
